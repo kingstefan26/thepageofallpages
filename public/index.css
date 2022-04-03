@@ -1,14 +1,27 @@
-#img {
-  display: block;
-  margin: auto;
-  height: 128px;
-  width: 128px;
-  padding: 2rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#canvas {
-  display: block;
-  margin: 2rem auto;
-  width: 540px;
-  height: 540px;
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+article {
+  padding: 10px 20px 10px 20px;
+
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+canvas {
+  height: 500px;
+  width: 500px;
+}
+
+article * {
+  margin: 10px;
 }

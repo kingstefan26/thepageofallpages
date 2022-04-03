@@ -1,3 +1,9 @@
+import fs from "fs";
+
+const cert = fs.readFileSync('snowpack.crt');
+const key = fs.readFileSync('snowpack.key');
+
+
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
   mount: {
@@ -26,6 +32,8 @@ export default {
   },
   devOptions: {
     /* ... */
+    port: 3000,
+    secure: {cert, key}
   },
   buildOptions: {
     /* ... */
