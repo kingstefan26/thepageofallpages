@@ -1,0 +1,9 @@
+{
+  "name": "js13kGames Progressive Web App",
+  "short_name": "BOMB",
+  "description": "BOMB IT",
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "theme_color": "#B12A34",
+  "background_color": "#B12A34"
+}
