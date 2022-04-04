@@ -10,6 +10,14 @@
 //   useWorker: true,
 // })({ particleCount: 200, spread: 200 });
 
+document.getElementById('fullscreenbtn')?.addEventListener('click', () => {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else {
+    document.documentElement.requestFullscreen();
+  }
+});
+
 import Main from './main';
 
 const main = new Main('gamecanvas');

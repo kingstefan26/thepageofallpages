@@ -1,6 +1,8 @@
 import IEntity from "../IEntity";
 import { getImage } from "../../render/renderutils";
 import Controler from "../../controler/controler";
+import game from "../../Game";
+import Bomb from "./Bomb";
 
 export default class Player extends IEntity {
 
@@ -15,10 +17,8 @@ export default class Player extends IEntity {
   private scale: number = 2;
 
 
-  public async create(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D): Promise<IEntity> {
+  public async create(): Promise<IEntity> {
     return new Promise(async (resolve) => {
-      this.canvas = canvas;
-      this.ctx = context;
 
       this.playerSprite = await getImage("assets/walking-girl2.png");
 
@@ -60,29 +60,52 @@ export default class Player extends IEntity {
 
   reqestanimation: boolean = false;
 
-  update(): void {
-    Controler.keymap.forEach((value, key) => {
-      switch (key) {
-        case "ArrowUp":
-          if (value) this.moveUp();
-          break;
-        case "ArrowDown":
-          if (value) this.moveDown();
-          break;
-        case "ArrowLeft":
-          if (value) this.moveLeft();
-          break;
-        case "ArrowRight":
-          if (value) this.moveRight();
-          break;
+  update(): Promise<void> {
+
+
+    return new Promise(async (resolve) => {
+      Controler.keymap.forEach((value, key) => {
+        switch (key) {
+          case "ArrowUp":
+            if (value) this.moveUp();
+            break;
+          case "ArrowDown":
+            if (value) this.moveDown();
+            break;
+          case "ArrowLeft":
+            if (value) this.moveLeft();
+            break;
+          case "ArrowRight":
+            if (value) this.moveRight();
+            break;
+          case " ":
+            if (value) this.doaction();
+              break;
+        }
+      });
+
+      if(this.reqestanimation) {
+        this.animate();
+        this.reqestanimation = false;
       }
+
+      resolve();
     });
 
-    if(this.reqestanimation) {
-      this.animate();
-      this.reqestanimation = false;
-    }
 
+  }
+
+
+  bombtimeout: number = 0;
+  async doaction() {
+    if (this.bombtimeout > performance.now()) {
+      return;
+    } else {
+      const bomb = await new Bomb(this.gameinstance).create();
+      bomb.position = {x: this.position.x, y: this.position.y};
+      game.createEntity(bomb);
+      this.bombtimeout = performance.now() + 1000;
+    }
   }
 
 

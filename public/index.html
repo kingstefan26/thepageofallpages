@@ -24,12 +24,21 @@
     </label>
 
     <p id="fps">FPS HERE</p>
+
+    <button id="fullscreenbtn" >Go Full Screen</button>
   </header>
   <main id="game">
-    <canvas height="500" width="500" id="gamecanvas"></canvas>
+    <div id="gamecontainer">
+      <canvas id="gamecanvas"></canvas>
+    </div>
   </main>
+  <div class="touchControlContainer">
+    <div id="actionBtnwrapper">
+      <button id="actionbtn" class="push--flat"></button>
+    </div>
+    <div id="joysticken"></div>
+  </div>
 </article>
-
 
 <script defer type="module" src="/dist/index.js"></script>
 </body>

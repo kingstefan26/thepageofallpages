@@ -13,12 +13,15 @@ export default class game {
     this.width = width;
     this.height = height;
   }
-  public entities: IEntity[] = [];
+  public static entities: IEntity[] = [];
+
+  public static createEntity(entity: IEntity): void {
+    game.entities?.push(entity);
+  }
 
   private RenderEngine!: RenderEngine;
 
-
-  private player!: Player;
+  player!: Player;
 
   public start() {
     document.addEventListener("DOMContentLoaded", async () => {
@@ -29,14 +32,14 @@ export default class game {
 
       this.RenderEngine = new RenderEngine(this);
 
-      this.player = <Player> await new Player().create(this.canvas, this.ctx)
+      this.player = <Player> await new Player(this).create()
 
       document.getElementById('speed')?.addEventListener('change', (e) => {
         // @ts-ignore
         this.player.speed = parseInt(e.target.value);
       });
 
-      this.entities.push(this.player);
+      game.entities.push(this.player);
 
       const gamescreen = new screen(this.canvas, this.ctx, this.width, this.height);
       await gamescreen.create();
@@ -48,9 +51,9 @@ export default class game {
       this.RenderEngine.start();
 
 
-      setInterval(() => {
-        for (const entity of this.entities) {
-          entity.update();
+      setInterval(  async () => {
+        for (const entity of game.entities) {
+          await entity.update();
         }
 
         this.RenderEngine.updatescreen();

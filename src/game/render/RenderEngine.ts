@@ -1,5 +1,5 @@
 import type Screen from "../screen/IScreen";
-import type game from "../Game";
+import game from "../Game";
 
 export class RenderEngine {
   private parentgame: game;
@@ -71,8 +71,10 @@ export class RenderEngine {
 
     // entities
 
-    for (const entity of this.parentgame.entities){
-      entity.draw();
+    if(game.entities){
+      for (const entity of game.entities){
+        entity.draw();
+      }
     }
 
     // particles
